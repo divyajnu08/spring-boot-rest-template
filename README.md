@@ -11,7 +11,7 @@ A simple REST API using Spring Boot + PostgreSQL + JWT Security.
 
 ### Setup Instructions
 
-* Configure application.properties
+* Configure application.properties  
 spring.datasource.url=jdbc:postgresql://localhost:5432/demo  
 spring.datasource.username=postgres  
 spring.datasource.password=yourpassword  
