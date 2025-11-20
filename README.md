@@ -21,40 +21,39 @@ spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true  
 ```
 
-# JWT Secret (Must be 256 bits or more)
-jwt.secret=yourVerySecureSecretKeyThatIs256bitsMinimum
-
-spring.main.web-application-type=servlet
-
 ### JWT Secret (Must be 256 bits or more)
 
+```properties
 jwt.secret=yourVerySecureSecretKeyThatIs256bitsMinimum
-spring.main.web-application-type=servlet
-
+```
 * Run the application
-./gradlew bootRun
+`./gradlew bootRun`
 
-### AUTHENTICATION API
+### AUTHENTICATION API  
+
 * Login (Generate JWT Token)
 
-POST /api/auth/login
+`POST /api/auth/login`
 
 Request Body
+
+```java
 {
 "username": "john",
 "password": "123456"
-}
+}```
 
 Response Example
+```java
 {
 "token": "eyJhbGciOiJIUzI1NiIsInR..."
-}
+}```
 
 ### Use JWT Token in Request Headers
 
 Add this in Postman / CURL / Frontend:
 
-Authorization: Bearer <your_token_here>
+`Authorization: Bearer <your_token_here>`
 
 ### CRUD – User API (Authenticated)
 Method	Endpoint	Body (JSON)	Auth Required
