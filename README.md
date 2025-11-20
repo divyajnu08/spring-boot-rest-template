@@ -26,6 +26,7 @@ spring.jpa.show-sql=true
 ```properties
 jwt.secret=yourVerySecureSecretKeyThatIs256bitsMinimum
 ```
+
 * Run the application
 `./gradlew bootRun`
 
@@ -37,16 +38,14 @@ jwt.secret=yourVerySecureSecretKeyThatIs256bitsMinimum
 
 Request Body
 
-```
-{
-"username": "john",
+```{
+"username": "john",  
 "password": "123456"
 }```
 
 Response Example
 
-```
-{
+```{
 "token": "eyJhbGciOiJIUzI1NiIsInR..."
 }```
 
