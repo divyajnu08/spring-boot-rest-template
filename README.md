@@ -34,16 +34,16 @@ jwt.secret=yourVerySecureSecretKeyThatIs256bitsMinimum
 
 * Login (Generate JWT Token)
 
-`POST /api/auth/login`
+**POST** `/api/auth/login`
 
-Request Body
+**Request Body**
+```json
+{
+  "username": "john",
+  "password": "123456"
+}
 
-```{
-"username": "john",  
-"password": "123456"
-}```
-
-Response Example
+**Request Body**
 
 ```{
 "token": "eyJhbGciOiJIUzI1NiIsInR..."
