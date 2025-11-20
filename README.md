@@ -56,6 +56,7 @@ Add this in Postman / CURL / Frontend:
 Authorization: Bearer <your_token_here>
 
 ### CRUD – User API (Authenticated)
+
 Method	Endpoint	Body (JSON)
 POST	/api/users	{ "name": "John", "password": "123456" }
 GET	/api/users
