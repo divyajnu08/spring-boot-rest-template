@@ -43,9 +43,10 @@ jwt.secret=yourVerySecureSecretKeyThatIs256bitsMinimum
   "password": "123456"
 }
 
-**Request Body**
+**Response**
 
-```{
+```json
+{
 "token": "eyJhbGciOiJIUzI1NiIsInR..."
 }```
 
