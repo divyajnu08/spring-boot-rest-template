@@ -41,14 +41,14 @@ jwt.secret=yourVerySecureSecretKeyThatIs256bitsMinimum
 ```json
 {
   "username": "john",
-  "password": "123456"  
+  "password": "123456"    
 }
   
 **Response**  
 
 ```json  
 {
-"token": "eyJhbGciOiJIUzI1NiIsInR..."  
+"token": "eyJhbGciOiJIUzI1NiIsInR..."    
 }
   
 ### Use JWT Token in Request Headers
