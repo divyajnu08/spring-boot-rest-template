@@ -29,7 +29,7 @@ jwt.secret=yourVerySecureSecretKeyThatIs256bitsMinimum
 * Run the application
 `./gradlew bootRun`
 
-### AUTHENTICATION API  
+### Authentication API
 
 * Login (Generate JWT Token)
 
@@ -37,14 +37,15 @@ jwt.secret=yourVerySecureSecretKeyThatIs256bitsMinimum
 
 Request Body
 
-```java
+```
 {
 "username": "john",
 "password": "123456"
 }```
 
 Response Example
-```java
+
+```
 {
 "token": "eyJhbGciOiJIUzI1NiIsInR..."
 }```
