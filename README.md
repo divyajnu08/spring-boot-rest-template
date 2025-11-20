@@ -37,11 +37,12 @@ jwt.secret=yourVerySecureSecretKeyThatIs256bitsMinimum
 **POST** `/api/auth/login`
 
 **Request Body**
+
 ```json
 {
   "username": "john",
   "password": "123456"
-}
+}```
 
 **Response**
 
