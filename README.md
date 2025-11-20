@@ -41,14 +41,14 @@ jwt.secret=yourVerySecureSecretKeyThatIs256bitsMinimum
 ```json
 {
   "username": "john",
-  "password": "123456"
+  "password": "123456"  
 }```
 
 **Response**
 
 ```json
 {
-"token": "eyJhbGciOiJIUzI1NiIsInR..."
+"token": "eyJhbGciOiJIUzI1NiIsInR..."  
 }```
 
 ### Use JWT Token in Request Headers
@@ -58,16 +58,17 @@ Add this in Postman / CURL / Frontend:
 `Authorization: Bearer <your_token_here>`
 
 ### CRUD – User API (Authenticated)
+
 Method	Endpoint	Body (JSON)	Auth Required
 POST	/api/users	{ "name": "John", "password": "123456" }	✔ YES
 GET	/api/users	-	✔ YES
 
 ### TESTING FLOW (Postman)
 
-POST /api/auth/login → Copy token
+`POST /api/auth/login → Copy token`
 
 Add request header:
 
-Authorization: Bearer <token>
+`Authorization: Bearer <token>`
 
-Test CRUD APIs normally
+### Test CRUD APIs normally
