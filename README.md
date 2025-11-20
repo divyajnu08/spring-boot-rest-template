@@ -43,7 +43,7 @@ jwt.secret=yourVerySecureSecretKeyThatIs256bitsMinimum
   "username": "john",
   "password": "123456"  
 }
-
+  
 **Response**  
 
 ```json
