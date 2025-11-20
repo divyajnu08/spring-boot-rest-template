@@ -44,7 +44,7 @@ jwt.secret=yourVerySecureSecretKeyThatIs256bitsMinimum
   "password": "123456"  
 }
 
-**Response**
+**Response**  
 
 ```json
 {
@@ -59,9 +59,9 @@ Add this in Postman / CURL / Frontend:
 
 ### CRUD – User API (Authenticated)
 
-Method	Endpoint	Body (JSON)	Auth Required
-POST	/api/users	{ "name": "John", "password": "123456" }	✔ YES
-GET	/api/users	-	✔ YES
+Method	Endpoint	Body (JSON)
+POST	/api/users	{ "name": "John", "password": "123456" }
+GET	/api/users
 
 ### TESTING FLOW (Postman)
 
