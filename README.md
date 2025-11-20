@@ -4,21 +4,10 @@ A simple REST API using Spring Boot + PostgreSQL + JWT Security.
 
 ### Features
 
-✔ User Registration & Login (JWT)
-✔ CRUD API (Users)
-✔ PostgreSQL Integration
-✔ Gradle Build
-
-### Project Structure
-
-src/main/java/com/example/demo/
-│
-├── config/        → Security & JWT
-├── controller/    → REST Controllers
-├── dto/           → Request/Response DTOs
-├── model/         → Entities
-├── repository/    → JpaRepository interfaces
-└── service/       → Business Logic
+* User Registration & Login (JWT)  
+* CRUD API (Users)  
+* PostgreSQL Integration  
+* Gradle Build  
 
 ### Setup Instructions
 
