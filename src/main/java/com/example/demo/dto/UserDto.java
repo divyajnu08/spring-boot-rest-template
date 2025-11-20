@@ -1,6 +1,5 @@
 package com.example.demo.dto;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
@@ -15,5 +14,7 @@ public class UserDto {
 
     @NotBlank(message = "Password is required")
     private String password;
+    
+    private String role;
 
 }
