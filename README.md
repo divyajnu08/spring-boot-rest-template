@@ -11,12 +11,15 @@ A simple REST API using Spring Boot + PostgreSQL + JWT Security.
 
 ### Setup Instructions
 
-* Configure application.properties  
-spring.datasource.url=jdbc:postgresql://localhost:5432/demo  
-spring.datasource.username=postgres  
-spring.datasource.password=yourpassword  
+* Configure application.properties
+
+```properties
+spring.datasource.url=jdbc:postgresql://localhost:5432/demo
+spring.datasource.username=postgres
+spring.datasource.password=yourpassword
 spring.jpa.hibernate.ddl-auto=update  
 spring.jpa.show-sql=true  
+```
 
 # JWT Secret (Must be 256 bits or more)
 jwt.secret=yourVerySecureSecretKeyThatIs256bitsMinimum
