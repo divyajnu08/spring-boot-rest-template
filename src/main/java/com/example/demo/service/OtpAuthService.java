@@ -37,7 +37,6 @@ public class OtpAuthService {
      */
     public OtpAuthService(@NonNull Map<String, OtpProviderAdapter> otpProviderRegistry) {
         this.otpProviderRegistry = otpProviderRegistry;
-        System.out.println("🚀 Registered Providers: " + otpProviderRegistry.keySet());
     }
 
     /**
