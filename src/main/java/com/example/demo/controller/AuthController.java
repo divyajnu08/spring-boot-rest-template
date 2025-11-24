@@ -1,9 +1,9 @@
 package com.example.demo.controller;
 
-import com.example.demo.config.JwtUtil;
 import com.example.demo.dto.JwtResponse;
 import com.example.demo.dto.LoginRequest;
 import com.example.demo.dto.OtpVerifyRequest;
+import com.example.demo.service.JWTService;
 import com.example.demo.service.OtpAuthService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,17 +25,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/auth")
 public class AuthController {
 
-    private final JwtUtil jwtUtil;
+    private final JWTService jwtService;
     private final OtpAuthService otpAuthService;
 
     /**
      * Constructor injection for required services.
      *
-     * @param jwtUtil        Utility class for generating JWT tokens.
+     * @param jwtService     Utility class for generating JWT tokens.
      * @param otpAuthService Service responsible for OTP verification.
      */
-    public AuthController(JwtUtil jwtUtil, OtpAuthService otpAuthService) {
-        this.jwtUtil = jwtUtil;
+    public AuthController(JWTService jwtService, OtpAuthService otpAuthService) {
+        this.jwtService = jwtService;
         this.otpAuthService = otpAuthService;
     }
 
@@ -47,11 +47,11 @@ public class AuthController {
      * @return ResponseEntity with JWT token as plain text.
      * @apiNote Replace with real authentication logic in future.
      */
-    @PostMapping("/login")
+    /*@PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
-        String token = jwtUtil.generateToken(request.getUsername());
+        String token = jwtService.generateToken(request.getUsername());
         return ResponseEntity.ok(token);
-    }
+    }*/
 
     /**
      * Verifies OTP using the configured provider and returns a JWT token.

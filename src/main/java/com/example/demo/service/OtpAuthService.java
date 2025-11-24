@@ -2,8 +2,10 @@ package com.example.demo.service;
 
 import com.example.demo.adapter.OtpProviderAdapter;
 import com.example.demo.dto.ProviderVerifyResult;
+import com.example.demo.model.User;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -29,14 +31,18 @@ public class OtpAuthService {
      */
     @NonNull
     private final Map<String, OtpProviderAdapter> otpProviderRegistry;
+    private final JWTService jwtService;
+    private final UserDetailsByPhoneService userDetailsByPhoneService;
 
     /**
      * Constructor-based dependency injection.
      *
      * @param otpProviderRegistry a map containing available OTP providers
      */
-    public OtpAuthService(@NonNull Map<String, OtpProviderAdapter> otpProviderRegistry) {
+    public OtpAuthService(@NonNull Map<String, OtpProviderAdapter> otpProviderRegistry, JWTService jwtService, UserDetailsByPhoneService userDetailsByPhoneService) {
         this.otpProviderRegistry = otpProviderRegistry;
+        this.jwtService = jwtService;
+        this.userDetailsByPhoneService = userDetailsByPhoneService;
     }
 
     /**
@@ -63,11 +69,16 @@ public class OtpAuthService {
         }
 
         ProviderVerifyResult result = adapter.verify(providerToken, meta);
-
         if (!result.isSuccess()) {
             throw new RuntimeException("OTP verification failed!");
         }
 
-        return "mytesttoken";  // TODO: Replace with real JWT generation logic
+        String phoneNumber = result.getPhoneNumber();
+        if (phoneNumber == null) {
+            throw new RuntimeException("OTP provider did not return a phone number!");
+        }
+
+        User userDetails = (User) userDetailsByPhoneService.loadUserByUsername(phoneNumber);
+        return jwtService.generateToken(userDetails);
     }
 }

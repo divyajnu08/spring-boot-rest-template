@@ -4,6 +4,7 @@ import com.example.demo.dto.UserDto;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
@@ -16,7 +17,7 @@ public class UserService {
     }
 
     public User createUser(UserDto userDto) {
-        User user = new User(null, userDto.getUsername(), userDto.getPassword());
+        User user = new User();
         return userRepository.save(user);
     }
 
