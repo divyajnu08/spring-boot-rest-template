@@ -19,13 +19,13 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping
-    public ResponseEntity<@NonNull User> createUser(@RequestBody UserDto userDto) {
-        return ResponseEntity.ok(userService.createUser(userDto));
+    @GetMapping
+    public ResponseEntity<@NonNull List<UserDto>> getUsers() {
+        return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    @GetMapping
-    public ResponseEntity<@NonNull List<User>> getUsers() {
-        return ResponseEntity.ok(userService.getAllUsers());
+    @GetMapping("/{phoneNumber}")
+    public ResponseEntity<@NonNull UserDto> getUser(@PathVariable("phoneNumber") String phoneNumber) {
+        return ResponseEntity.ok(userService.getUser(phoneNumber));
     }
 }

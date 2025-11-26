@@ -35,9 +35,9 @@ public class User implements UserDetails {
     @Column(name = "role")
     private Set<String> roles = new HashSet<>();
 
-    public User(@NotBlank(message = "Name is required") String phoneNumber, String role) {
+    public User(@NotBlank(message = "Name is required") String phoneNumber, Set<String> roles) {
         this.phoneNumber = phoneNumber;
-        this.getRoles().add(role);
+        this.setRoles(roles);
     }
 
     @Override

@@ -31,17 +31,17 @@ public class OtpAuthServiceImpl implements OtpAuthService {
     @NonNull
     private final Map<String, OtpProviderAdapter> otpProviderRegistry;
     private final JWTServiceImpl jwtService;
-    private final UserDetailsByPhoneService userDetailsByPhoneService;
+    private final UserService userService;
 
     /**
      * Constructor-based dependency injection.
      *
      * @param otpProviderRegistry a map containing available OTP providers
      */
-    public OtpAuthServiceImpl(@NonNull Map<String, OtpProviderAdapter> otpProviderRegistry, JWTServiceImpl jwtService, UserDetailsByPhoneService userDetailsByPhoneService) {
+    public OtpAuthServiceImpl(@NonNull Map<String, OtpProviderAdapter> otpProviderRegistry, JWTServiceImpl jwtService, UserDetailsByPhoneService userDetailsByPhoneService, UserService userService) {
         this.otpProviderRegistry = otpProviderRegistry;
         this.jwtService = jwtService;
-        this.userDetailsByPhoneService = userDetailsByPhoneService;
+        this.userService = userService;
     }
 
     /**
@@ -78,7 +78,7 @@ public class OtpAuthServiceImpl implements OtpAuthService {
             throw new RuntimeException("OTP provider did not return a phone number!");
         }
 
-        User userDetails = (User) userDetailsByPhoneService.loadUserByUsername(phoneNumber);
-        return jwtService.generateToken(userDetails);
+        User user = userService.findOrCreateUserByPhoneNumber(phoneNumber);
+        return jwtService.generateToken(user);
     }
 }

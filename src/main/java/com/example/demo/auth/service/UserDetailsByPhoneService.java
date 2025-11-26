@@ -1,7 +1,6 @@
 package com.example.demo.auth.service;
 
 import org.jspecify.annotations.NonNull;
-import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,6 +17,6 @@ public class UserDetailsByPhoneService implements UserDetailsService {
 
     @Override
     public @NonNull UserDetails loadUserByUsername(@NonNull String phoneNumber) throws UsernameNotFoundException {
-        return userService.findUserByName(phoneNumber);
+        return userService.findUserByPhoneNumber(phoneNumber);
     }
 }

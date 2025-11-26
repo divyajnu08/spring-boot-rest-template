@@ -24,33 +24,16 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/auth")
 public class AuthController {
 
-    private final JWTServiceImpl jwtService;
     private final OtpAuthServiceImpl otpAuthServiceImpl;
 
     /**
      * Constructor injection for required services.
      *
-     * @param jwtService         Utility class for generating JWT tokens.
      * @param otpAuthServiceImpl Service responsible for OTP verification.
      */
-    public AuthController(JWTServiceImpl jwtService, OtpAuthServiceImpl otpAuthServiceImpl) {
-        this.jwtService = jwtService;
+    public AuthController(OtpAuthServiceImpl otpAuthServiceImpl) {
         this.otpAuthServiceImpl = otpAuthServiceImpl;
     }
-
-    /**
-     * Mock login API — currently accepts only username and
-     * returns a JWT token without validating credentials.
-     *
-     * @param request Login request containing username.
-     * @return ResponseEntity with JWT token as plain text.
-     * @apiNote Replace with real authentication logic in future.
-     */
-    /*@PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
-        String token = jwtService.generateToken(request.getUsername());
-        return ResponseEntity.ok(token);
-    }*/
 
     /**
      * Verifies OTP using the configured provider and returns a JWT token.
