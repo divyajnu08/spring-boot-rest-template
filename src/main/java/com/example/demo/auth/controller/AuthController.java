@@ -1,7 +1,6 @@
 package com.example.demo.auth.controller;
 
 import com.example.demo.auth.dto.JwtResponse;
-import com.example.demo.auth.dto.LoginRequest;
 import com.example.demo.auth.dto.OtpVerifyRequest;
 import com.example.demo.auth.service.JWTServiceImpl;
 import com.example.demo.auth.service.OtpAuthServiceImpl;

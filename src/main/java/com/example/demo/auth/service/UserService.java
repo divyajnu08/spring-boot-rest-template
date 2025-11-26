@@ -6,6 +6,7 @@ import com.example.demo.auth.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -22,9 +23,13 @@ public class UserService {
     }
 
     public User findUserByName(String phoneNumber) {
-        return userRepository.findByPhoneNumber(phoneNumber).orElse(createUser(
-                new UserDto(phoneNumber, "ROLE_USER")
-        ));
+        List<User> allUsers = userRepository.findAll();
+        Optional<User> user = userRepository.findByPhoneNumber(phoneNumber);
+        if (user.isEmpty()) {
+            System.out.println("Optional user is empty , so creating new User");
+            return createUser(new UserDto(phoneNumber, "ROLE_USER"));
+        }
+        return user.get();
     }
 
     public List<User> getAllUsers() {

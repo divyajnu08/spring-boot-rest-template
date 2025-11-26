@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class JWTServiceImpl implements JWTService {
@@ -43,15 +41,6 @@ public class JWTServiceImpl implements JWTService {
 
     public String extractUsername(String token) {
         return parseClaims(token).getSubject();
-    }
-
-    public Set<String> extractRoles(String token) {
-        Claims c = parseClaims(token);
-        Object rolesObj = c.get("roles");
-        if (rolesObj instanceof java.util.List<?> list) {
-            return list.stream().map(Object::toString).collect(Collectors.toSet());
-        }
-        return Set.of();
     }
 
     public boolean isTokenValid(String token) {

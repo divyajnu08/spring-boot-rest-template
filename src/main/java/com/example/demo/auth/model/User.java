@@ -35,10 +35,6 @@ public class User implements UserDetails {
     @Column(name = "role")
     private Set<String> roles = new HashSet<>();
 
-    public User(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
     public User(@NotBlank(message = "Name is required") String phoneNumber, String role) {
         this.phoneNumber = phoneNumber;
         this.getRoles().add(role);

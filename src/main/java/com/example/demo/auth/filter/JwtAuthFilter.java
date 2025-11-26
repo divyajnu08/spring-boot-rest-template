@@ -14,20 +14,37 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.List;
 
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JWTServiceImpl jwtService;
     private final UserDetailsByPhoneService userDetailsByPhoneService;
+    private static final List<String> PUBLIC_URLS = List.of(
+            "/api/auth"
+    );
 
-    public JwtAuthFilter(JWTServiceImpl jwtService, UserDetailsByPhoneService userDetailsByPhoneService) {
+    public JwtAuthFilter(JWTServiceImpl jwtService,
+                         UserDetailsByPhoneService userDetailsByPhoneService) {
         this.jwtService = jwtService;
         this.userDetailsByPhoneService = userDetailsByPhoneService;
     }
 
     @Override
-    protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(@NonNull HttpServletRequest request,
+                                    @NonNull HttpServletResponse response,
+                                    @NonNull FilterChain filterChain) throws ServletException, IOException {
+
+        String path = request.getServletPath();
+
+        boolean isPublic = PUBLIC_URLS.stream().anyMatch(path::startsWith);
+
+        if (isPublic) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         String header = request.getHeader("Authorization");
         if (StringUtils.hasText(header) && header.startsWith("Bearer ")) {
             String token = header.substring(7);
