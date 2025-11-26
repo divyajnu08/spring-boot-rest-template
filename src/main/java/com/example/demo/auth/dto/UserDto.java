@@ -1,4 +1,4 @@
-package com.example.demo.dto;
+package com.example.demo.auth.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -10,11 +10,8 @@ import lombok.*;
 public class UserDto {
 
     @NotBlank(message = "Name is required")
-    private String username;
+    private String phoneNumber;
 
-    @NotBlank(message = "Password is required")
-    private String password;
-    
     private String role;
 
 }

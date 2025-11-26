@@ -1,10 +1,9 @@
-package com.example.demo.service;
+package com.example.demo.auth.service;
 
-import com.example.demo.model.User;
+import com.example.demo.auth.model.User;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -15,7 +14,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class JWTService {
+public class JWTServiceImpl implements JWTService {
 
     @Value("${jwt.secret}")
     private String secret;
@@ -31,6 +30,7 @@ public class JWTService {
     }
 
     public String generateToken(User user) {
+
         long now = System.currentTimeMillis();
 
         JwtBuilder b = Jwts.builder()

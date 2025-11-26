@@ -1,6 +1,6 @@
-package com.example.demo.adapter;
+package com.example.demo.auth.adapter;
 
-import com.example.demo.dto.ProviderVerifyResult;
+import com.example.demo.auth.dto.ProviderVerifyResult;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;

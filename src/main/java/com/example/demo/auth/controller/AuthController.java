@@ -1,10 +1,10 @@
-package com.example.demo.controller;
+package com.example.demo.auth.controller;
 
-import com.example.demo.dto.JwtResponse;
-import com.example.demo.dto.LoginRequest;
-import com.example.demo.dto.OtpVerifyRequest;
-import com.example.demo.service.JWTService;
-import com.example.demo.service.OtpAuthService;
+import com.example.demo.auth.dto.JwtResponse;
+import com.example.demo.auth.dto.LoginRequest;
+import com.example.demo.auth.dto.OtpVerifyRequest;
+import com.example.demo.auth.service.JWTServiceImpl;
+import com.example.demo.auth.service.OtpAuthServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
  *     <li>OTP verification using dynamic provider selection (e.g., Firebase, Twilio).</li>
  * </ul>
  *
- * <p>The OTP verification logic is delegated to {@link OtpAuthService},
+ * <p>The OTP verification logic is delegated to {@link OtpAuthServiceImpl},
  * which uses the Adapter Pattern to support multiple OTP providers
  * without changing backend logic.
  */
@@ -25,18 +25,18 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/auth")
 public class AuthController {
 
-    private final JWTService jwtService;
-    private final OtpAuthService otpAuthService;
+    private final JWTServiceImpl jwtService;
+    private final OtpAuthServiceImpl otpAuthServiceImpl;
 
     /**
      * Constructor injection for required services.
      *
-     * @param jwtService     Utility class for generating JWT tokens.
-     * @param otpAuthService Service responsible for OTP verification.
+     * @param jwtService         Utility class for generating JWT tokens.
+     * @param otpAuthServiceImpl Service responsible for OTP verification.
      */
-    public AuthController(JWTService jwtService, OtpAuthService otpAuthService) {
+    public AuthController(JWTServiceImpl jwtService, OtpAuthServiceImpl otpAuthServiceImpl) {
         this.jwtService = jwtService;
-        this.otpAuthService = otpAuthService;
+        this.otpAuthServiceImpl = otpAuthServiceImpl;
     }
 
     /**
@@ -65,7 +65,7 @@ public class AuthController {
      */
     @PostMapping("/verify-otp")
     public ResponseEntity<?> verifyOtp(@RequestBody OtpVerifyRequest request) {
-        String token = otpAuthService.verifyAndGenerateToken(
+        String token = otpAuthServiceImpl.verifyAndGenerateToken(
                 request.getProviderKey(),
                 request.getProviderToken(),
                 request.getMeta()

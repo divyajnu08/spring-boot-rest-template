@@ -1,8 +1,9 @@
-package com.example.demo.controller;
+package com.example.demo.auth.controller;
 
-import com.example.demo.dto.UserDto;
-import com.example.demo.model.User;
-import com.example.demo.service.UserService;
+import com.example.demo.auth.dto.UserDto;
+import com.example.demo.auth.model.User;
+import com.example.demo.auth.service.UserService;
+import org.jspecify.annotations.NonNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
@@ -20,12 +21,12 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@Valid @RequestBody UserDto userDto) {
+    public ResponseEntity<@NonNull User> createUser(@RequestBody UserDto userDto) {
         return ResponseEntity.ok(userService.createUser(userDto));
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getUsers() {
+    public ResponseEntity<@NonNull List<User>> getUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 }

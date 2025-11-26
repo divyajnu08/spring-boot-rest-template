@@ -1,6 +1,6 @@
-package com.example.demo.config;
+package com.example.demo.auth.config;
 
-import com.example.demo.filter.JwtAuthFilter;
+import com.example.demo.auth.filter.JwtAuthFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

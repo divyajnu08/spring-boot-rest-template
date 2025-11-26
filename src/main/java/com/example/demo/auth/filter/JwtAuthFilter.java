@@ -1,7 +1,7 @@
-package com.example.demo.filter;
+package com.example.demo.auth.filter;
 
-import com.example.demo.service.JWTService;
-import com.example.demo.service.UserDetailsByPhoneService;
+import com.example.demo.auth.service.JWTServiceImpl;
+import com.example.demo.auth.service.UserDetailsByPhoneService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -9,7 +9,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.jspecify.annotations.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -19,10 +18,10 @@ import java.io.IOException;
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
 
-    private final JWTService jwtService;
+    private final JWTServiceImpl jwtService;
     private final UserDetailsByPhoneService userDetailsByPhoneService;
 
-    public JwtAuthFilter(JWTService jwtService, UserDetailsByPhoneService userDetailsByPhoneService) {
+    public JwtAuthFilter(JWTServiceImpl jwtService, UserDetailsByPhoneService userDetailsByPhoneService) {
         this.jwtService = jwtService;
         this.userDetailsByPhoneService = userDetailsByPhoneService;
     }

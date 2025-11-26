@@ -1,6 +1,6 @@
-package com.example.demo.config;
+package com.example.demo.auth.config;
 
-import com.example.demo.adapter.OtpProviderAdapter;
+import com.example.demo.auth.adapter.OtpProviderAdapter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

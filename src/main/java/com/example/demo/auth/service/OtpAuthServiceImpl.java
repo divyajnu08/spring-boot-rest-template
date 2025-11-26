@@ -1,11 +1,10 @@
-package com.example.demo.service;
+package com.example.demo.auth.service;
 
-import com.example.demo.adapter.OtpProviderAdapter;
-import com.example.demo.dto.ProviderVerifyResult;
-import com.example.demo.model.User;
+import com.example.demo.auth.adapter.OtpProviderAdapter;
+import com.example.demo.auth.dto.ProviderVerifyResult;
+import com.example.demo.auth.model.User;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -23,7 +22,7 @@ import java.util.Map;
  * In production, replace with actual JWT generation logic.
  */
 @Service
-public class OtpAuthService {
+public class OtpAuthServiceImpl implements OtpAuthService {
 
     /**
      * Registry of available OTP provider adapters.
@@ -31,7 +30,7 @@ public class OtpAuthService {
      */
     @NonNull
     private final Map<String, OtpProviderAdapter> otpProviderRegistry;
-    private final JWTService jwtService;
+    private final JWTServiceImpl jwtService;
     private final UserDetailsByPhoneService userDetailsByPhoneService;
 
     /**
@@ -39,7 +38,7 @@ public class OtpAuthService {
      *
      * @param otpProviderRegistry a map containing available OTP providers
      */
-    public OtpAuthService(@NonNull Map<String, OtpProviderAdapter> otpProviderRegistry, JWTService jwtService, UserDetailsByPhoneService userDetailsByPhoneService) {
+    public OtpAuthServiceImpl(@NonNull Map<String, OtpProviderAdapter> otpProviderRegistry, JWTServiceImpl jwtService, UserDetailsByPhoneService userDetailsByPhoneService) {
         this.otpProviderRegistry = otpProviderRegistry;
         this.jwtService = jwtService;
         this.userDetailsByPhoneService = userDetailsByPhoneService;
@@ -57,6 +56,7 @@ public class OtpAuthService {
      * @throws IllegalArgumentException if providerKey does not match any registered provider.
      * @throws RuntimeException         if OTP verification fails (provider returns false).
      */
+    @Override
     public String verifyAndGenerateToken(
             @NonNull String providerKey,
             @NonNull String providerToken,

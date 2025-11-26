@@ -1,6 +1,5 @@
-package com.example.demo.service;
+package com.example.demo.auth.service;
 
-import com.example.demo.repository.UserRepository;
 import org.jspecify.annotations.NonNull;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -10,16 +9,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserDetailsByPhoneService implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
-    public UserDetailsByPhoneService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserDetailsByPhoneService(UserService userService) {
+        this.userService = userService;
     }
 
     @Override
     public @NonNull UserDetails loadUserByUsername(@NonNull String phoneNumber) throws UsernameNotFoundException {
-        return userRepository.findByPhoneNumber(phoneNumber)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + phoneNumber));
+        return userService.findUserByName(phoneNumber);
     }
 
 }
