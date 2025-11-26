@@ -10,51 +10,65 @@ import org.springframework.stereotype.Service;
 import java.util.Map;
 
 /**
- * Service responsible for OTP verification and token generation.
+ * Service responsible for performing OTP verification and generating authentication tokens.
  *
- * <p>This class uses the Adapter Pattern for OTP providers (e.g., Firebase, Twilio, AWS SNS).
- * The actual provider is chosen dynamically using {@code providerKey}, allowing the backend to remain
- * independent of any specific OTP provider implementation.
+ * <p>This service uses a registry of {@link OtpProviderAdapter} instances, following the
+ * Adapter Pattern to allow seamless switching between OTP providers such as Firebase,
+ * Twilio, AWS SNS, or others. The actual provider is selected dynamically based on
+ * {@code providerKey}, keeping the authentication flow provider-agnostic.</p>
  *
- * <p>Once the OTP is successfully verified, the service returns an authentication token (JWT in real implementation).
- *
- * <p>NOTE: Currently returns a test token for development purposes.
- * In production, replace with actual JWT generation logic.
+ * <p>Once OTP verification succeeds, a user record is retrieved or created
+ * (depending on application rules), and a JWT token is generated for the user.</p>
  */
 @Service
 public class OtpAuthServiceImpl implements OtpAuthService {
 
     /**
-     * Registry of available OTP provider adapters.
-     * The key represents the provider's unique identifier (e.g., "FIREBASE", "TWILIO").
+     * Registry mapping provider keys to their respective OTP adapters.
+     * <p>Keys must match the value returned by {@link OtpProviderAdapter#providerKey()}.</p>
      */
     @NonNull
     private final Map<String, OtpProviderAdapter> otpProviderRegistry;
+
     private final JWTServiceImpl jwtService;
     private final UserService userService;
 
     /**
-     * Constructor-based dependency injection.
+     * Constructs an instance of {@code OtpAuthServiceImpl}.
      *
-     * @param otpProviderRegistry a map containing available OTP providers
+     * @param otpProviderRegistry map of available OTP providers
+     * @param jwtService          service for generating JWT tokens
+     * @param userService         service for managing and retrieving user records
      */
-    public OtpAuthServiceImpl(@NonNull Map<String, OtpProviderAdapter> otpProviderRegistry, JWTServiceImpl jwtService, UserDetailsByPhoneService userDetailsByPhoneService, UserService userService) {
+    public OtpAuthServiceImpl(
+            @NonNull Map<String, OtpProviderAdapter> otpProviderRegistry,
+            JWTServiceImpl jwtService,
+            UserService userService
+    ) {
         this.otpProviderRegistry = otpProviderRegistry;
         this.jwtService = jwtService;
         this.userService = userService;
     }
 
     /**
-     * Verifies OTP using the selected provider and generates an authentication token upon success.
+     * Verifies an OTP token via the selected provider and generates a JWT authentication token
+     * if verification succeeds.
      *
-     * @param providerKey   Unique key to identify which OTP provider should process the request.
-     *                      Must match the key returned by {@code providerKey()} in each adapter.
-     * @param providerToken Token/OTP received from the frontend and verified using an external provider.
-     * @param meta          Optional metadata that may be required by some providers
-     *                      (e.g., phone number, requestId). Can be {@code null}.
-     * @return A test authentication token (to be replaced with JWT).
-     * @throws IllegalArgumentException if providerKey does not match any registered provider.
-     * @throws RuntimeException         if OTP verification fails (provider returns false).
+     * <p>Workflow:</p>
+     * <ol>
+     *     <li>Resolve the provider using {@code providerKey}</li>
+     *     <li>Call {@link OtpProviderAdapter#verify(String, Map)} to validate the token</li>
+     *     <li>Ensure the provider returned a phone number</li>
+     *     <li>Retrieve or create a user with that phone number</li>
+     *     <li>Generate a JWT token representing the authenticated user</li>
+     * </ol>
+     *
+     * @param providerKey   the identifier of the OTP provider to use
+     * @param providerToken the OTP or verification token to validate
+     * @param meta          optional metadata required by the OTP provider (e.g., requestId, phoneNumber)
+     * @return a JWT token if verification succeeds
+     * @throws IllegalArgumentException if {@code providerKey} does not match any provider
+     * @throws RuntimeException         if OTP verification fails or the provider does not return a phone number
      */
     @Override
     public String verifyAndGenerateToken(
