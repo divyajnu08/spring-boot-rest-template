@@ -1,6 +1,6 @@
 # Spring Boot OTP Login + JWT Authentication (MVP)
 
-A minimal and clean starter project that provides APIs for OTP-based authentication and token verification.
+A minimal starter project that provides APIs for OTP-based authentication and token verification.
 This version supports phone number + OTP login only, with automatic user creation on first login.
 No username/password mechanism is used.
 
