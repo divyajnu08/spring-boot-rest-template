@@ -1,79 +1,114 @@
-# Spring Boot CRUD + JWT Authentication
 
-A simple REST API using Spring Boot + PostgreSQL + JWT Security.
+# Spring Boot OTP Login + JWT Authentication (MVP)
 
-✅ Features
+A minimal and clean starter project that provides APIs for OTP-based authentication and token verification.
+This version supports phone number + OTP login only, with automatic user creation on first login.
+No username/password mechanism is used.
 
-✔ User Registration & Login (JWT)
-✔ CRUD API (Users)
-✔ PostgreSQL Integration
-✔ Gradle Build
+---
 
-📁 Project Structure
-src/main/java/com/example/demo/
-│
-├── config/        → Security & JWT
-├── controller/    → REST Controllers
-├── dto/           → Request/Response DTOs
-├── model/         → Entities
-├── repository/    → JpaRepository interfaces
-└── service/       → Business Logic
+## Features
 
-⚙️ Setup Instructions
-🔧 Configure application.properties
-spring.datasource.url=jdbc:postgresql://localhost:5432/demo
-spring.datasource.username=postgres
-spring.datasource.password=yourpassword
+OTP Authentication (Phone + OTP)  
+Auto User Creation on First Login  
+JWT Token Generation  
+
+---
+
+## Setup Instructions
+
+### `application.properties`
+
+```
+spring.application.name=spring-boot-rest-template
+
+# Database
+spring.datasource.url=jdbc:postgresql://localhost:5432/yourdb
+spring.datasource.username=yourdbuser
+spring.datasource.password=yourdbpassord
+
+# JPA
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
+spring.jpa.open-in-view=false
 
-# JWT Secret (Must be 256 bits or more)
-jwt.secret=yourVerySecureSecretKeyThatIs256bitsMinimum
+# JWT
+jwt.secret=ad28f7d33baf724a97ac961bc87c230167bd1d9e8a4b689fbd35b9cd1e8a32f1
+jwt.expiration-ms=3600000
 
-spring.main.web-application-type=servlet
+# Server
+server.port=8080
 
-▶ Run the application
+```
+
+---
+
+## Run the Application
+
+```bash
 ./gradlew bootRun
+```
 
-🔐 AUTHENTICATION API
-➤ Login (Generate JWT Token)
+---
 
-POST /api/auth/login
+# Authentication API (OTP + JWT)
 
-Request Body
+## 1. Verify OTP (Login / Signup)
+
+```
+POST /api/auth/verify-otp
+```
+
+### Request Body:
+```json
 {
-"username": "john",
-"password": "123456"
+  "phone": "9876543210",
+  "otp": "1234"
 }
+```
 
-Response Example
+### Response:
+```json
 {
-"token": "eyJhbGciOiJIUzI1NiIsInR..."
+  "token": "eyJhbGciOiJIUzI1NiIsInR...",
+  "user": {
+    "id": 1,
+    "phone": "9876543210",
+    "name": null
+  }
 }
+```
 
-📌 Use JWT Token in Request Headers
+* If user does NOT exist → auto-created
+* If OTP is valid → JWT token returned  
 
-Add this in Postman / CURL / Frontend:
+---
 
+# Using the JWT Token
+
+Add this header in Postman / CURL / Frontend:
+
+```
 Authorization: Bearer <your_token_here>
+```
 
-📦 CRUD – User API (Authenticated)
-Method	Endpoint	Body (JSON)	Auth Required
-POST	/api/users	{ "name": "John", "password": "123456" }	✔ YES
-GET	/api/users	-	✔ YES
-🧪 TESTING FLOW (Postman)
+---
 
-POST /api/auth/login → Copy token
+# Testing Flow (in Postman)
 
-Add request header:
+1. **POST** `/api/auth/verify-otp`  
+   → Receive **token**  
+2. Add Header:
 
+```
 Authorization: Bearer <token>
+```
 
+3. Call other protected APIs normally
 
-Test CRUD APIs normally 🎯
+---
 
-👨‍💻 Author
+# Author
 
-Your Name Here
-💼 Senior Java/Spring Developer
-📧 your.email@example.com
+**Divya Srivastava**  
+📧 divya.jnu08@gmail.com
