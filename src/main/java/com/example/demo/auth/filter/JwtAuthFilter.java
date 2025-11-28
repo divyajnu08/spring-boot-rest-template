@@ -1,7 +1,6 @@
 package com.example.demo.auth.filter;
 
 import com.example.demo.auth.service.JWTServiceImpl;
-import com.example.demo.auth.service.UserDetailsByPhoneService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -9,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.jspecify.annotations.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -33,7 +33,7 @@ import java.util.List;
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JWTServiceImpl jwtService;
-    private final UserDetailsByPhoneService userDetailsByPhoneService;
+    private final UserDetailsService userDetailsService;
 
     /**
      * URLs that should bypass JWT authentication.
@@ -49,13 +49,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     /**
      * Constructs a new {@link JwtAuthFilter}.
      *
-     * @param jwtService                service for verifying and extracting information from JWT tokens
-     * @param userDetailsByPhoneService service for loading user details based on phone number (username)
+     * @param jwtService         service for verifying and extracting information from JWT tokens
+     * @param userDetailsService bean for loading user details based on phone number (username)
      */
     public JwtAuthFilter(JWTServiceImpl jwtService,
-                         UserDetailsByPhoneService userDetailsByPhoneService) {
+                         UserDetailsService userDetailsService) {
         this.jwtService = jwtService;
-        this.userDetailsByPhoneService = userDetailsByPhoneService;
+        this.userDetailsService = userDetailsService;
     }
 
     /**
@@ -103,7 +103,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 String username = jwtService.extractUsername(token);
 
                 if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                    var userDetails = userDetailsByPhoneService.loadUserByUsername(username);
+                    var userDetails = userDetailsService.loadUserByUsername(username);
 
                     UsernamePasswordAuthenticationToken auth =
                             new UsernamePasswordAuthenticationToken(
