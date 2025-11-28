@@ -8,9 +8,9 @@ No username/password mechanism is used.
 
 ## Features
 
-✔ OTP Authentication (Phone + OTP)  
-✔ Auto User Creation on First Login  
-✔ JWT Token Generation
+* OTP Authentication (Phone + OTP)
+* Auto User Creation on First Login
+* JWT Token Generation
 
 ## Setup Instructions
 
@@ -77,8 +77,8 @@ POST /api/auth/verify-otp
 }
 ```
 
-✔ If user does NOT exist → auto-created  
-✔ If OTP is valid → JWT token returned
+* If user does NOT exist → auto-created
+* If OTP is valid → JWT token returned
 
 ---
 
