@@ -92,7 +92,7 @@ public class OtpAuthServiceImpl implements OtpAuthService {
             throw new RuntimeException("OTP provider did not return a phone number!");
         }
 
-        User user = userService.findOrCreateUserByPhoneNumber(phoneNumber);
+        User user = userService.findOrCreateUserByPhoneNumber(phoneNumber, meta);
         return jwtService.generateToken(user);
     }
 }

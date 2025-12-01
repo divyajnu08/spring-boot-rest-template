@@ -4,9 +4,11 @@ import com.example.demo.auth.dto.UserDto;
 import com.example.demo.auth.mapper.UserMapper;
 import com.example.demo.auth.model.User;
 import com.example.demo.auth.repository.UserRepository;
+import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -80,12 +82,11 @@ public class UserService {
      * @param phoneNumber the phone number associated with the user
      * @return the existing or newly created user
      */
-    public User findOrCreateUserByPhoneNumber(String phoneNumber) {
-        Optional<User> userOptional = userRepository.findByPhoneNumber(phoneNumber);
-
-        return userOptional.orElseGet(
-                () -> createUser(new UserDto(phoneNumber, Set.of("ROLE_USER")))
-        );
+    public User findOrCreateUserByPhoneNumber(@NonNull String phoneNumber, Map<String, Object> meta) {
+        Object role = Optional.ofNullable(meta.get("role")).orElse("USER");
+        return userRepository
+                .findByPhoneNumber(phoneNumber)
+                .orElse(createUser(new UserDto(phoneNumber, Set.of(role.toString()))));
     }
 
     /**
