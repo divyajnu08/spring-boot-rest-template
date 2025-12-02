@@ -23,6 +23,8 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<@NonNull User, @NonNull Long> {
 
+    @NonNull Optional<User> findById(Long id);
+
     /**
      * Finds a user by their unique phone number.
      * <p>
