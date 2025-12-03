@@ -13,5 +13,5 @@ public interface AddressRepository extends JpaRepository<@NonNull Address, @NonN
 
     @NonNull Optional<Address> findById(Long id);
 
-    Optional<UserProfile> findByProfileId(Long profileId);
+    Optional<UserProfile> findByUserProfile_Id(Long profileId);
 }

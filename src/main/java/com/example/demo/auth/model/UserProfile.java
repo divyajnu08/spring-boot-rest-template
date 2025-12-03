@@ -21,6 +21,9 @@ public class UserProfile {
     private Long id;
 
     @NonNull
+    private String avatar;
+
+    @NonNull
     private String firstName;
 
     @Nullable

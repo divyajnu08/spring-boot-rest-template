@@ -84,9 +84,8 @@ public class UserService {
      */
     public User findOrCreateUserByPhoneNumber(@NonNull String phoneNumber, Map<String, Object> meta) {
         Object role = Optional.ofNullable(meta.get("role")).orElse("USER");
-        return userRepository
-                .findByPhoneNumber(phoneNumber)
-                .orElse(createUser(new UserDto(phoneNumber, Set.of(role.toString()))));
+        Optional<User> user = userRepository.findByPhoneNumber(phoneNumber);
+        return user.orElseGet(() -> createUser(new UserDto(phoneNumber, Set.of(role.toString()))));
     }
 
     /**
